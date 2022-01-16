@@ -6,15 +6,32 @@ import org.apache.avro.Schema
 // union schemas can't contain other union schemas as a direct
 // child, so whenever we create a union, we need to check if our
 // children are unions and flatten
-fun createSafeUnion(nullFirst : Boolean,vararg schemas: Schema): Schema {
+fun createSafeUnion(nullFirst: Boolean, vararg schemas: Schema): Schema {
    val flattened = schemas.flatMap { schema -> runCatching { schema.types }.getOrElse { listOf(schema) } }
    val (nulls, rest) = flattened.partition { it.type == Schema.Type.NULL }
-   return Schema.createUnion(if(nullFirst) nulls + rest else rest + nulls)
+   return Schema.createUnion(if (nullFirst) nulls + rest else rest + nulls)
 }
 
 fun Schema.extractNonNull(): Schema = when (this.type) {
-   Schema.Type.UNION -> this.types.filter { it.type != Schema.Type.NULL }.let { if(it.size > 1) Schema.createUnion(it) else it[0] }
+   Schema.Type.UNION -> this.types.filter { it.type != Schema.Type.NULL }
+      .let { if (it.size > 1) Schema.createUnion(it) else it[0] }
    else -> this
+}
+
+fun Schema.isUnion(): Boolean {
+   return this.type == Schema.Type.UNION
+}
+
+fun Schema.isNullable(): Boolean {
+   if (!isUnion()) {
+      return getType() == Schema.Type.NULL
+   }
+   for (schema in getTypes()) {
+      if (schema.isNullable()) {
+         return true
+      }
+   }
+   return false
 }
 
 /**
@@ -41,7 +58,7 @@ fun Schema.overrideNamespace(namespace: String): Schema {
          copy
       }
       Schema.Type.UNION -> Schema.createUnion(types.map { it.overrideNamespace(namespace) })
-      Schema.Type.ENUM -> Schema.createEnum(name, doc, namespace, enumSymbols, enumDefault)
+      Schema.Type.ENUM -> Schema.createEnum(name, doc, namespace, enumSymbols)
       Schema.Type.FIXED -> Schema.createFixed(name, doc, namespace, fixedSize)
       Schema.Type.MAP -> Schema.createMap(valueType.overrideNamespace(namespace))
       Schema.Type.ARRAY -> Schema.createArray(elementType.overrideNamespace(namespace))

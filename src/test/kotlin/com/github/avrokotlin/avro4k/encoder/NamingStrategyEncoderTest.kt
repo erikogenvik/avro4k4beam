@@ -8,6 +8,7 @@ import com.github.avrokotlin.avro4k.schema.SnakeCaseNamingStrategy
 import io.kotest.core.spec.style.WordSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.Serializable
+import org.apache.avro.generic.GenericRecord
 import org.apache.avro.util.Utf8
 
 class NamingStrategyEncoderTest : WordSpec({
@@ -39,4 +40,8 @@ class NamingStrategyEncoderTest : WordSpec({
 }) {
    @Serializable
    data class Foo(val fooBar: String)
+}
+
+private fun GenericRecord.hasField(s: String): Any {
+   return get(s) != null
 }

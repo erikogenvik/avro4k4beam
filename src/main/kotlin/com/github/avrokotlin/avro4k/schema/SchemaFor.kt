@@ -53,7 +53,7 @@ class EnumSchemaFor(
 
       val enumSchema = SchemaBuilder.enumeration(naming.name).doc(entityAnnotations.doc())
          .namespace(naming.namespace)
-         .defaultSymbol(defaultSymbol)
+         //.defaultSymbol(defaultSymbol)
          .symbols(*symbols.toTypedArray())
 
       entityAnnotations.aliases().forEach { enumSchema.addAlias(it) }

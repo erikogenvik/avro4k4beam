@@ -24,8 +24,8 @@ class EnumIoTest : StringSpec({
 
       writeRead(EnumTest(Cream.Bruce, BBM.Moore), EnumTest.serializer())
       writeRead(EnumTest(Cream.Bruce, BBM.Moore), EnumTest.serializer()) {
-         (it["a"] as GenericEnumSymbol<*>).toString() shouldBe "Bruce"
-         (it["b"] as GenericEnumSymbol<*>).toString() shouldBe "Moore"
+         (it["a"] as GenericEnumSymbol).toString() shouldBe "Bruce"
+         (it["b"] as GenericEnumSymbol).toString() shouldBe "Moore"
       }
    }
 

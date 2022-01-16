@@ -24,7 +24,7 @@ object Libs {
    }
 
    object Avro {
-      private const val version = "1.11.0"
+      private const val version = "1.8.2"
       const val avro = "org.apache.avro:avro:$version"
    }
 }

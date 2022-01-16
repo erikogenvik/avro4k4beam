@@ -4,6 +4,7 @@ import com.github.avrokotlin.avro4k.AnnotationExtractor
 import com.github.avrokotlin.avro4k.ListRecord
 import com.github.avrokotlin.avro4k.Record
 import com.github.avrokotlin.avro4k.schema.extractNonNull
+import com.github.avrokotlin.avro4k.schema.isNullable
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PolymorphicKind
@@ -47,7 +48,7 @@ class RecordEncoder(private val schema: Schema,
    override fun fieldSchema(): Schema {
       // if the element is nullable, then we should have a union schema which we can extract the non-null schema from
       val currentFieldSchema = schema.fields[currentIndex].schema()
-      return if (currentFieldSchema.isNullable) {
+      return if (currentFieldSchema.isNullable()) {
          currentFieldSchema.extractNonNull()
       } else {
          currentFieldSchema

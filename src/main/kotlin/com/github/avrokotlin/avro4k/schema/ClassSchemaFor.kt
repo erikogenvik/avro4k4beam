@@ -117,7 +117,7 @@ class ClassSchemaFor(
 
       val default: Any? = annos.default()?.let {
          when {
-            it == Avro.NULL -> Schema.Field.NULL_DEFAULT_VALUE
+            it == Avro.NULL -> Schema.Field.NULL_VALUE
             schemaWithResolvedNamespace.extractNonNull().type in listOf(
                Schema.Type.FIXED,
                Schema.Type.BYTES,
@@ -147,9 +147,9 @@ class ClassSchemaFor(
              else -> {
                  val number = this.content.toBigDecimal()
                  if(number.scale() <= 0){
-                    number.toBigInteger()
+                    number.toBigInteger().toInt()
                  }else{
-                    number
+                    number.toDouble()
                  }
              }
          }

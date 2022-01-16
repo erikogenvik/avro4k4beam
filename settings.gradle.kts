@@ -5,4 +5,4 @@ pluginManagement {
    }
 }
 
-rootProject.name = "avro4k-core"
+rootProject.name = "avro4k4beam-core"

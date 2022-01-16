@@ -28,7 +28,7 @@ object StringFromAvroValue : FromAvroValue<Any?, String> {
 object EnumFromAvroValue : FromAvroValue<Any, String> {
    override fun fromValue(value: Any): String {
       return when (value) {
-         is GenericEnumSymbol<*> -> value.toString()
+         is GenericEnumSymbol -> value.toString()
          is String -> value
          else -> value.toString()
       }

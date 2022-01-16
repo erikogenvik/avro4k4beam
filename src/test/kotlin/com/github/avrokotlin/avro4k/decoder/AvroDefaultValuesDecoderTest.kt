@@ -5,14 +5,16 @@ import com.github.avrokotlin.avro4k.AvroDefault
 import com.github.avrokotlin.avro4k.AvroName
 import com.github.avrokotlin.avro4k.ScalePrecision
 import com.github.avrokotlin.avro4k.io.AvroDecodeFormat
-import com.github.avrokotlin.avro4k.serializer.BigDecimalSerializer
+import com.github.avrokotlin.avro4k.serializer.*
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.UseSerializers
 import kotlinx.serialization.encodeToByteArray
+import org.apache.avro.Conversions
 import org.apache.avro.generic.GenericData
 import java.math.BigDecimal
 

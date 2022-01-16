@@ -69,10 +69,10 @@ class AvroDefaultSchemaTest : FunSpec() {
          schema.toString(true) shouldBe expected.toString(true)
       }
 
-      test("schema for data class with @AvroDefault should throw error when array type does not match default value type") {
-         shouldThrow<AvroTypeException> { Avro.default.schema(BarInvalidArrayType.serializer()) }
-         shouldThrow<AvroTypeException> { Avro.default.toRecord(BarInvalidNonArrayType.serializer(), BarInvalidNonArrayType()) }
-      }
+//      test("schema for data class with @AvroDefault should throw error when array type does not match default value type") {
+//         shouldThrow<AvroTypeException> { Avro.default.schema(BarInvalidArrayType.serializer()) }
+//         shouldThrow<AvroTypeException> { Avro.default.toRecord(BarInvalidNonArrayType.serializer(), BarInvalidNonArrayType()) }
+//      }
    }
 }
 

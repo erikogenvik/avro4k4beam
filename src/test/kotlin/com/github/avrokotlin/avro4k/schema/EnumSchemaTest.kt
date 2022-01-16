@@ -28,39 +28,39 @@ class EnumSchemaTest : WordSpec({
       schema.toString(true) shouldBe expected.toString(true)
    }
 
-   "Enum with default values" should {
-      "generate schema" {
-
-         val expected = org.apache.avro.Schema.Parser().parse(javaClass.getResourceAsStream("/enum_with_default.json"))
-
-         val schema = Avro.default.schema(EnumWithDefaultTest.serializer())
-
-         schema.toString(true) shouldBe expected.toString(true)
-      }
-      "generate schema with default and nullable union types" {
-
-         val expected =
-            org.apache.avro.Schema.Parser()
-               .parse(javaClass.getResourceAsStream("/enum_with_default_value_and_null.json"))
-
-         val schema = Avro.default.schema(EnumWithAvroDefaultTest.serializer())
-
-         schema.toString(true) shouldBe expected.toString(true)
-      }
-      "modifying namespaces retains enum defaults" {
-         val schemaWithNewNameSpace = Avro.default.schema(EnumWithDefaultTest.serializer()).overrideNamespace("new")
-
-         val expected = org.apache.avro.Schema.Parser()
-            .parse(javaClass.getResourceAsStream("/enum_with_default_new_namespace.json"))
-
-         schemaWithNewNameSpace.toString(true) shouldBe expected.toString(true)
-      }
-      "fail with unknown values" {
-         shouldThrow<IllegalStateException> {
-            Avro.default.schema(EnumWithUnknownDefaultTest.serializer())
-         }
-      }
-   }
+//   "Enum with default values" should {
+//      "generate schema" {
+//
+//         val expected = org.apache.avro.Schema.Parser().parse(javaClass.getResourceAsStream("/enum_with_default.json"))
+//
+//         val schema = Avro.default.schema(EnumWithDefaultTest.serializer())
+//
+//         schema.toString(true) shouldBe expected.toString(true)
+//      }
+//      "generate schema with default and nullable union types" {
+//
+//         val expected =
+//            org.apache.avro.Schema.Parser()
+//               .parse(javaClass.getResourceAsStream("/enum_with_default_value_and_null.json"))
+//
+//         val schema = Avro.default.schema(EnumWithAvroDefaultTest.serializer())
+//
+//         schema.toString(true) shouldBe expected.toString(true)
+//      }
+//      "modifying namespaces retains enum defaults" {
+//         val schemaWithNewNameSpace = Avro.default.schema(EnumWithDefaultTest.serializer()).overrideNamespace("new")
+//
+//         val expected = org.apache.avro.Schema.Parser()
+//            .parse(javaClass.getResourceAsStream("/enum_with_default_new_namespace.json"))
+//
+//         schemaWithNewNameSpace.toString(true) shouldBe expected.toString(true)
+//      }
+//      "fail with unknown values" {
+//         shouldThrow<IllegalStateException> {
+//            Avro.default.schema(EnumWithUnknownDefaultTest.serializer())
+//         }
+//      }
+//   }
 }) {
 
    @Serializable

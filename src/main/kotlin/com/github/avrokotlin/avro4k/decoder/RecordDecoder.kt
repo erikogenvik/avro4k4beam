@@ -4,6 +4,7 @@ import com.github.avrokotlin.avro4k.AnnotationExtractor
 import com.github.avrokotlin.avro4k.AvroConfiguration
 import com.github.avrokotlin.avro4k.FieldNaming
 import com.github.avrokotlin.avro4k.schema.extractNonNull
+import com.github.avrokotlin.avro4k.schema.isNullable
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PolymorphicKind
@@ -82,10 +83,7 @@ class RecordDecoder(
     }
 
     private fun fieldValue(): Any? {
-        if (record.hasField(resolvedFieldName())) {
-            return record.get(resolvedFieldName())
-        }
-        return null
+        return record.get(resolvedFieldName())
     }
 
     private fun resolvedFieldName(): String = configuration.namingStrategy.to(FieldNaming(desc, currentIndex).name())
@@ -95,7 +93,7 @@ class RecordDecoder(
     override fun fieldSchema(): Schema {
         // if the element is nullable, then we should have a union schema which we can extract the non-null schema from
         val schema = field().schema()
-        return if (schema.isNullable) {
+        return if (schema.isNullable()) {
             schema.extractNonNull()
         } else {
             schema
