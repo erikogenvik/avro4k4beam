@@ -1,18 +1,24 @@
-# <img src="https://github.com/avro-kotlin/avro4k/raw/master/src/main/graphics/logo.png" height=160>
-[Avro](https://avro.apache.org/) format for [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). This library is a port of [sksamuel's](https://github.com/sksamuel) Scala Avro generator [avro4s](https://github.com/sksamuel/avro4s).
+# <img src="./src/main/graphics/logo.png" height=160>
+[Avro](https://avro.apache.org/) format for [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) specifically for [Apache Beam](https://beam.apache.org/), which requires an older version of Avro. This library is a port of [Avro4k](https://github.com/avro-kotlin/avro4k) which in turn iis a port of [sksamuel's](https://github.com/sksamuel) Scala Avro generator [avro4s](https://github.com/sksamuel/avro4s).
 
-![build-master](https://github.com/avro-kotlin/avro4k/workflows/build-master/badge.svg)
-[<img src="https://img.shields.io/maven-central/v/com.github.avro-kotlin.avro4k/avro4k-core.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cavro4k)
+![build-master](https://github.com/erikogenvik/avro4k4beam/workflows/build-master/badge.svg)
+[<img src="https://img.shields.io/maven-central/v/org.ogenvik.avro4k4beam/avro4k4beam-core.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cavro4k4beam)
 
+
+## Preface
+
+Avro4k4beam is a port of the [Avro4k](https://github.com/avro-kotlin/avro4k) library, with the only difference being that it uses an earlier version of Avro (1.8.2). This is to match with the version of Avro being used by Apache Beam. If/when Apache Avro releases a new version which uses a version of Avro that matches what's being used by the Avro4k library this port can be discontinued.
+
+Everything that follow below is copied verbatim from the Avro4k library, with the only difference being references to "Avro4k" being replaced with "Avro4k4beam" in some places.
 
 ## Introduction
 
 Avro4k is a Kotlin library that brings support for Avro to the Kotlin Serialization framework. This library supports reading and writing to/from binary and json streams as well as supporting Avro schema generation. 
 
-- [Generate schemas](https://github.com/avro-kotlin/avro4k#schemas) from Kotlin data classes. This allows you to use data classes as the canonical source for the schemas and generate Avro schemas from _them_, rather than define schemas externally and then generate (or manually write) data classes to match.
+- [Generate schemas](https://github.com/erikogenvik/avro4k4beam#schemas) from Kotlin data classes. This allows you to use data classes as the canonical source for the schemas and generate Avro schemas from _them_, rather than define schemas externally and then generate (or manually write) data classes to match.
 - Marshall data classes to / from instances of Avro Generic Records. The basic _structure type_ in Avro is the _IndexedRecord_ or it's more common subclass, the _GenericRecord_. This library will marshall data to and from Avro records. This can be useful for interop with frameworks like Kafka which provide serializers which work at the record level.
-- [Read / Write](https://github.com/avro-kotlin/avro4k#input--output) data classes to input or output streams. Avro records can be serialized as binary (with or without embedded schema) or json, and this library provides _AvroInputStream_ and _AvroOutputStream_ classes to support data classes directly.
-- [Support logical types](https://github.com/avro-kotlin/avro4k#types). This library provides support for the Avro [logical types](https://avro.apache.org/docs/1.11.0/spec.html#Logical+Types) out of the box, in addition to the _standard_ types supported by the Kotlin serialization framework.
+- [Read / Write](https://github.com/erikogenvik/avro4k4beam#input--output) data classes to input or output streams. Avro records can be serialized as binary (with or without embedded schema) or json, and this library provides _AvroInputStream_ and _AvroOutputStream_ classes to support data classes directly.
+- [Support logical types](https://github.com/erikogenvik/avro4k4beam#types). This library provides support for the Avro [logical types](https://avro.apache.org/docs/1.11.0/spec.html#Logical+Types) out of the box, in addition to the _standard_ types supported by the Kotlin serialization framework.
 - Add custom serializer for other types. With Avro4k you can easily add your own _AvroSerializer_ instances that provides schemas and serialization for types not supported by default.
 
 ## Schemas
@@ -567,16 +573,16 @@ Pizza(name=hawaiian, ingredients=[Ingredient(name=ham, sugar=1.5, fat=5.6), Ingr
 
 
 
-### Using avro4k in your project
+### Using avro4k4beam in your project
 
 Gradle
-```compile 'com.github.avro-kotlin.avro4k:avro4k-core:xxx'```
+```compile 'org.ogenvik.avro4k4beam:avro4k4beam-core:xxx'```
 
 Maven
 ```xml
 <dependency>
-    <groupId>com.github.avro-kotlin.avro4k</groupId>
-    <artifactId>avro4k-core</artifactId>
+    <groupId>org.ogenvik.avro4k4beam</groupId>
+    <artifactId>avro4k4beam-core</artifactId>
     <version>xxx</version>
 </dependency>
 ```
@@ -585,7 +591,7 @@ Check the latest released version on Maven Central
 
 ### Contributions
 
-Contributions to avro4s are always welcome. Good ways to contribute include:
+Contributions to avro4k are always welcome. Good ways to contribute include:
 
 - Raising bugs and feature requests
 - Fixing bugs and enhancing the DSL
